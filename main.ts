@@ -1,6 +1,15 @@
-import { Plugin, Modal, TFile, App } from 'obsidian';
+import { Plugin, Modal, TFile, App, PluginSettingTab, Setting } from 'obsidian';
 
-class NeofetchModal extends Modal {
+interface ObsifetchSettings {
+    customLogo: string;
+}
+
+const DEFAULT_SETTINGS: ObsifetchSettings = {
+    customLogo: ''
+}
+
+
+class ObsifetchModal extends Modal {
     private logo: string;
     private vaultInfo: string;
     private systemInfo: string;
@@ -14,34 +23,29 @@ class NeofetchModal extends Modal {
 
     onOpen() {
       const {contentEl} = this;
-      contentEl.addClass('neofetch-modal');
+      contentEl.addClass('obsifetch-modal');
       contentEl.createEl('div', {
           text: '> obsifetch',
-          cls: 'neofetch-title'
+          cls: 'obsifetch-title'
       });
-      const container = contentEl.createDiv({cls: 'neofetch-container'});
+      const container = contentEl.createDiv({cls: 'obsifetch-container'});
   
-      // Logo section
       const logoSection = container.createDiv({cls: 'logo-section'});
       logoSection.createEl('pre', {text: this.logo});
   
-      // Combined info section
       const infoSection = container.createDiv({cls: 'info-section'});
       const vaultName = this.app.vault.getName();
       
-      // Username@vault header
       infoSection.createEl('div', {
           text: `${require("os").userInfo().username}@${vaultName.toLowerCase()}`,
           cls: 'vault-header'
       });
   
-      // Separator
       infoSection.createEl('div', {
           text: '-'.repeat(36),
           cls: 'vault-separator'
       });
   
-      // Combined info content
       const preElement = infoSection.createEl('pre');
       this.vaultInfo.toLowerCase().split('\n').forEach(line => {
         const [label, value] = line.split(': ');
@@ -56,7 +60,6 @@ class NeofetchModal extends Modal {
         lineDiv.createSpan({text: value, cls: 'stat-value'});
     });
   
-      // Color squares
       const colorSquares = preElement.createSpan({cls: 'color-squares'});
       const currentRow = colorSquares.createSpan({cls: 'color-row'});
       [
@@ -85,20 +88,43 @@ class NeofetchModal extends Modal {
     }
 }
 
-export default class ObsidianNeofetchPlugin extends Plugin {
+class ObsifetchSettingTab extends PluginSettingTab {
+    plugin: ObsifetchPlugin;
+
+    constructor(app: App, plugin: ObsifetchPlugin) {
+        super(app, plugin);
+        this.plugin = plugin;
+    }
+
+    display(): void {
+        const {containerEl} = this;
+        containerEl.empty();
+
+        new Setting(containerEl)
+            .setName('Custom ASCII Logo')
+            .setDesc('Paste your custom ASCII art here')
+            .addTextArea(text => text
+                .setPlaceholder('Paste ASCII art here...')
+                .setValue(this.plugin.settings.customLogo)
+                .onChange(async (value) => {
+                    this.plugin.settings.customLogo = value;
+                    await this.plugin.saveSettings();
+                }));
+    }
+}
+
+export default class ObsifetchPlugin extends Plugin {
+
     private async getVaultStats() {
         const activeTheme = this.app.customCss.theme || 'default';
         const pluginCount = Object.keys(this.app.plugins.manifests).length;
         
-        // Get all real files (excluding folders)
         const allFiles = this.app.vault.getAllLoadedFiles()
             .filter(file => file instanceof TFile);
     
-        // Filter markdown files
         const markdownFiles = allFiles
             .filter(file => file.extension === 'md');
     
-        // Filter attachments
         const attachments = allFiles
             .filter(file => file.extension !== 'md');
     
@@ -116,7 +142,6 @@ private getSystemInfo(): string {
   let platform = 'unknown';
   let osDetails = '';
   
-  // OS Detection
   if (navigator.userAgentData?.platform) {
       platform = navigator.userAgentData.platform.toLowerCase();
       if (platform === 'linux') {
@@ -142,18 +167,37 @@ private getSystemInfo(): string {
       }
   }
 
-  // Return in desired order
   return [
     `appearance: ${isDarkTheme ? 'dark' : 'light'}`,
     `os: ${osDetails || platform}`
 ].join('\n').trimEnd();
 }
 
-  private async displayNeofetch() {
+  private async displayObsifetch() {
     const stats = await this.getVaultStats();
     const info = this.getSystemInfo();
     
-    const logo = `        ;++       
+    const logo = this.settings.customLogo || this.defaultLogo;
+
+    const vaultInfoLines = [
+      `total files: ${stats.totalFiles}`,
+      `markdown files: ${stats.totalMarkdown}`,
+      `attachments: ${stats.totalAttachments}`,
+      `plugins: ${stats.totalPlugins}`,
+      `theme: ${stats.theme}`
+  ].join('\n').trimEnd();
+
+    new ObsifetchModal(
+        this.app,
+        logo, 
+        vaultInfoLines,
+        info
+    ).open();
+}
+
+    settings: ObsifetchSettings;
+
+    private defaultLogo = `        ;++       
       ;;+++X;     
     :;;;;;XXXX    
     :::::XXXXXX   
@@ -165,34 +209,39 @@ private getSystemInfo(): string {
   XXXX$$$$$XXXX   
     XX$$XXXXXXX   
          ;XXXX     `;
-
-    // Create vault info with proper line breaks
-    const vaultInfoLines = [
-      `total files: ${stats.totalFiles}`,
-      `markdown files: ${stats.totalMarkdown}`,
-      `attachments: ${stats.totalAttachments}`,
-      `plugins: ${stats.totalPlugins}`,
-      `theme: ${stats.theme}`
-  ].join('\n').trimEnd(); // Join with newlines
-
-    new NeofetchModal(
-        this.app,
-        logo, 
-        vaultInfoLines,
-        info
-    ).open();
-}
+    private ribbonIcon: HTMLElement;
 
     async onload() {
-        console.log('loading obsidian-neofetch');
+        await this.loadSettings();
+        this.addSettingTab(new ObsifetchSettingTab(this.app, this));
+        console.log('loading obsifetch');
         this.addCommand({
-            id: 'show-neofetch',
-            name: 'Show Neofetch Information',
-            callback: () => this.displayNeofetch()
+            id: 'show-obsifetch',
+            name: 'Show Obsifetch',
+            callback: () => this.displayObsifetch()
         });
+    
+        this.ribbonIcon = this.addRibbonIcon(
+            'terminal-square',
+            'obsifetch',
+            (evt: MouseEvent) => {
+                this.displayObsifetch();
+            }
+        );
+        
+    }
+
+
+    async loadSettings() {
+        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    }
+
+    async saveSettings() {
+        await this.saveData(this.settings);
     }
 
     onunload() {
-        console.log('unloading obsidian-neofetch');
+        console.log('unloading obsifetch');
+        this.ribbonIcon.remove();
     }
 }
