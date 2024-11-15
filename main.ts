@@ -41,8 +41,7 @@ class ObsifetchModal extends Modal {
           cls: 'vault-header'
       });
   
-      infoSection.createEl('div', {
-          text: '-'.repeat(36),
+      infoSection.createEl('hr', {
           cls: 'vault-separator'
       });
   
