@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsifetch",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "A neofetch-style system information display for Obsidian vaults.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
