@@ -1,0 +1,11 @@
+{
+	"id": "obsifetch",
+	"name": "Obsifetch",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "neofetch but for Obsidian",
+	"author": "tabibyte",
+	"authorUrl": "tabibyte.github.io",
+	"isDesktopOnly": false,
+	"styles": ["styles.css"]
+}
