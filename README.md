@@ -42,11 +42,3 @@ In the future
 
 Contributions are always welcome! I'm not an expert by any means. Doing this  for fun.
 
-Just the standard procedure
-
-```bash
-git clone https://github.com/tabibyte/obsifetch
-npm install
-npm run build
-```
-
