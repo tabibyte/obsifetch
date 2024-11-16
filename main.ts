@@ -21,66 +21,65 @@ class ObsifetchModal extends Modal {
     }
 
     onOpen() {
-        const {contentEl} = this;
-        contentEl.addClass('obsifetch-modal');
-        contentEl.createEl('div', {
-            text: '> obsifetch',
-            cls: 'obsifetch-title'
-        });
-        const container = contentEl.createDiv({cls: 'obsifetch-container'});
-    
-        const logoSection = container.createDiv({cls: 'logo-section'});
-        logoSection.createEl('pre', {text: this.logo});
-    
-        const infoSection = container.createDiv({cls: 'info-section'});
-        const vaultName = this.app.vault.getName();
-        
-        infoSection.createEl('div', {
-            text: `${require("os").userInfo().username}@${vaultName.toLowerCase()}`,
-            cls: 'vault-header'
-        });
-    
-        infoSection.createEl('div', {
-            text: '-'.repeat(36),
-            cls: 'vault-separator'
-        });
-    
-        const preElement = infoSection.createEl('pre');
-        this.vaultInfo.toLowerCase().split('\n').forEach(line => {
-            const [label, value] = line.split(': ');
-            const lineDiv = preElement.createDiv();
-            lineDiv.createSpan({text: label + ': ', cls: 'stat-label'});
-            lineDiv.createSpan({text: value, cls: 'stat-value'});
-        });
-        this.systemInfo.toLowerCase().split('\n').forEach(line => {
-            const [label, value] = line.split(': ');
-            const lineDiv = preElement.createDiv();
-            lineDiv.createSpan({text: label + ': ', cls: 'stat-label'});
-            lineDiv.createSpan({text: value, cls: 'stat-value'});
-        });
-    
-        const colorSquares = preElement.createSpan({cls: 'color-squares'});
-        const currentRow = colorSquares.createSpan({cls: 'color-row'});
-        [
-            '--interactive-accent',
-            '--text-accent',
-            '--text-faint',
-            '--text-normal',
-            '--text-muted',
-            '--text-error',
-            '--text-highlight-bg',
-            '--background-secondary',
-            '--background-primary'
-        ].forEach(color => {
-            const square = currentRow.createSpan();
-            square.style.backgroundColor = `var(${color})`;
-            square.style.width = '1.5em';
-            square.style.height = '1.5em';
-            square.style.display = 'inline-block';
-            square.style.marginLeft = '0';
-        });
-    }
-
+      const {contentEl} = this;
+      contentEl.addClass('obsifetch-modal');
+      contentEl.createEl('div', {
+          text: '> obsifetch',
+          cls: 'obsifetch-title'
+      });
+      const container = contentEl.createDiv({cls: 'obsifetch-container'});
+  
+      const logoSection = container.createDiv({cls: 'logo-section'});
+      logoSection.createEl('pre', {text: this.logo});
+  
+      const infoSection = container.createDiv({cls: 'info-section'});
+      const vaultName = this.app.vault.getName();
+      
+      infoSection.createEl('div', {
+          text: `${require("os").userInfo().username}@${vaultName.toLowerCase()}`,
+          cls: 'vault-header'
+      });
+  
+      infoSection.createEl('hr', {
+          cls: 'vault-separator'
+      });
+  
+      const preElement = infoSection.createEl('pre');
+      this.vaultInfo.toLowerCase().split('\n').forEach(line => {
+        const [label, value] = line.split(': ');
+        const lineDiv = preElement.createDiv();
+        lineDiv.createSpan({text: label + ': ', cls: 'stat-label'});
+        lineDiv.createSpan({text: value, cls: 'stat-value'});
+    });
+    this.systemInfo.toLowerCase().split('\n').forEach(line => {
+        const [label, value] = line.split(': ');
+        const lineDiv = preElement.createDiv();
+        lineDiv.createSpan({text: label + ': ', cls: 'stat-label'});
+        lineDiv.createSpan({text: value, cls: 'stat-value'});
+    });
+  
+      const colorSquares = preElement.createSpan({cls: 'color-squares'});
+      const currentRow = colorSquares.createSpan({cls: 'color-row'});
+      [
+          
+          '--interactive-accent',
+          '--text-accent',
+          '--text-faint',
+          '--text-normal',
+          '--text-muted',
+          '--text-error',
+          '--text-highlight-bg',
+          '--background-secondary',
+          '--background-primary'
+      ].forEach(color => {
+          const square = currentRow.createSpan();
+          square.style.backgroundColor = `var(${color})`;
+          square.style.width = '1.5em';
+          square.style.height = '1.5em';
+          square.style.display = 'inline-block';
+          square.style.marginLeft = '0';
+      });
+  }
     onClose() {
         const {contentEl} = this;
         contentEl.empty();
