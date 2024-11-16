@@ -103,6 +103,10 @@ pre {
     display: block;
 }
 
+.modal-container.mod-dim .modal {
+    overflow: hidden;
+}
+
 /* Stat Labels and Values
 -------------------------------------------------- */
 .stat-label,
