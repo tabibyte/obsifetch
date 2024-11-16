@@ -1,47 +1,43 @@
-# Obsifetch
+### Obsifetch
 
 A neofetch-style system information display for Obsidian vaults.
 
-![image](https://github.com/user-attachments/assets/8f66f547-a9f8-4b74-8992-d1c2b9de7533)
+![img1](https://github.com/user-attachments/assets/2acc06d2-6287-431d-bace-442a88d4dbdd)
 
-## Features
+### Features
 
-- 📊 Displays vault statistics (files, attachments, plugins, themes)
-- 📝 User display
-- 💻 Shows OS information
-- 🎨 Theme-aware color blocks
-- 🖼️ Customizable ASCII art logo
+- Display Vault Statistics (files, sizes, attachments, orphan files, plugins, themes etc.)
+- Username and Vault Name
+- OS Information
+- Theme Colors
+- Customizable ASCII Art Logo
 
-## Installation 🛠️
+### Installation
 
-### From Obsidian Community Plugins 📦
+#### From Obsidian Community Plugins
 
-In the future
+**In the future**
 
-### Manual Installation 🖥️
+#### Manual Installation
 
-1. Download `main.js`, `manifest.json`, and `styles.css`
-2. Copy them to your vault's `.obsidian/plugins/obsifetch/` directory
+1. Download `main.js`, `manifest.json`, and `styles.css` from [Release Page](https://github.com/tabibyte/obsifetch/releases)
+2. Create and copy them to your vault's `.obsidian/plugins/obsifetch/` directory
+3. Reload community plugins list in settings in obsidian app. It should appear there.
+4. Turn on the plugin
+5. You can use it by clicking the terminal icon in the left ribbon, using command palette and searching for "Show Neofetch" or you can define and use a hotkey
 
-## Usage 🎯
-
-- Click the terminal icon in the left ribbon
-- Use command palette and search for "Show Neofetch"
-- Define and use a Hotkey
-
-## Customization 🎨
-
-### Custom ASCII Art 🖌️
+### Custom ASCII Art
 
 1. Open Obsidian Settings
 2. Go to Obsifetch settings
 3. Paste your custom ASCII art in the text area
 (should be small enough to fit, if not will be ugly)
+4. If you want default logo just delete pasted ASCII
 
-## Contributions 🤝
+### Contributions
 
 Contributions are always welcome! I'm not an expert by any means. Doing this for fun.
 
-## Credits 🌟
+### Credits
 
 Inspired by [neofetch](https://github.com/dylanaraps/neofetch)
