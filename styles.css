@@ -77,9 +77,9 @@
 }
 
 .vault-separator {
-    color: var(--text-muted);
     border-color: var(--text-muted);
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 /* Text Content Styles
