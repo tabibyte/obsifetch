@@ -89,6 +89,7 @@ pre {
     color: var(--text-accent);
     font-weight: bold;
     line-height: 1.1;
+    overflow: hidden;
 }
 
 .info-section pre {
