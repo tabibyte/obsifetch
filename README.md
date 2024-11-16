@@ -16,15 +16,17 @@ A neofetch-style system information display for Obsidian vaults.
 
 #### From Obsidian Community Plugins
 
-**In the future**
+*In the future*
+
 
 #### Manual Installation
 
 1. Download `main.js`, `manifest.json`, and `styles.css` from [Release Page](https://github.com/tabibyte/obsifetch/releases)
-2. Create and copy them to your vault's `.obsidian/plugins/obsifetch/` directory
-3. Reload community plugins list in settings in obsidian app. It should appear there.
-4. Turn on the plugin
-5. You can use it by clicking the terminal icon in the left ribbon, using command palette and searching for "Show Neofetch" or you can define and use a hotkey
+2. Create `obsifetch` folder in your vault's `.obsidian/plugins/`
+3. Copy those 3 files to your vault's `.obsidian/plugins/obsifetch/` directory
+4. Reload community plugins list in settings in obsidian app. It should appear there.
+5. Turn on the plugin
+6. You can use it by clicking the terminal icon in the left ribbon, using command palette and searching for "Show Neofetch" or you can define and use a hotkey
 
 ### Custom ASCII Art
 
