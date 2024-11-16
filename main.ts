@@ -265,23 +265,20 @@ private async getVaultStats() {
     private async displayObsifetch() {
         const stats = await this.getVaultStats();
         const info = this.getSystemInfo();
-        
-        const logo = this.settings.customLogo || this.defaultLogo;
 
+        const logo = this.settings.customLogo || this.defaultLogo;
+    
         const vaultInfoLines = [
-            `version: ${stats.version}`,
-            `total size: ${stats.totalSize}`,
-            `markdown size: ${stats.markdownSize}`,
-            `attachment size: ${stats.attachmentSize}`,
-            `total files: ${stats.totalFiles}`,
-            `markdown files: ${stats.totalMarkdown}`,
-            `attachments: ${stats.totalAttachments} (${stats.attachmentPercentage})`,
-            `orphaned files: ${stats.orphanedFiles}`,
+            `obsifetch: v${this.manifest.version}`,
+            `total files: ${stats.totalFiles} (${stats.totalSize})`,
+            `markdown files: ${stats.totalMarkdown} (${stats.markdownSize})`,
+            `attachments: ${stats.totalAttachments} (${stats.attachmentSize})`,
+            `orphan files: ${stats.orphanedFiles}`,
             `core plugins: ${stats.corePlugins}`,
             `community plugins: ${stats.communityPlugins}`,
             `theme: ${stats.theme}`
         ].join('\n').trimEnd();
-
+    
         new ObsifetchModal(
             this.app,
             logo, 
