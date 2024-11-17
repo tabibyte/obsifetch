@@ -8,6 +8,14 @@ const DEFAULT_SETTINGS: ObsifetchSettings = {
     customLogo: ''
 }
 
+const getUsername = (): string => {
+    try {
+        return require("os").userInfo().username;
+    } catch {
+        return "user";
+    }
+};
+
 class ObsifetchModal extends Modal {
     private logo: string;
     private vaultInfo: string;
@@ -36,9 +44,9 @@ class ObsifetchModal extends Modal {
       const vaultName = this.app.vault.getName();
       
       infoSection.createEl('div', {
-          text: `${require("os").userInfo().username}@${vaultName.toLowerCase()}`,
-          cls: 'vault-header'
-      });
+        text: `${getUsername()}@${vaultName.toLowerCase()}`,
+        cls: 'vault-header'
+        });
   
       infoSection.createEl('hr', {
           cls: 'vault-separator'
@@ -250,7 +258,7 @@ private async getVaultStats() {
             } else {
                 osDetails = 'linux';
             }
-        } else if (userAgent.includes('mac')) {
+        } else if (userAgent.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('darwin')) {
             platform = 'macos';
         } else if (userAgent.includes('win')) {
             platform = 'windows';
