@@ -83,7 +83,7 @@
 
 /* Text Content Styles
 -------------------------------------------------- */
-pre {
+.logo-section pre {
     margin: 0;
     white-space: pre;
     color: var(--text-accent);
