@@ -80,7 +80,7 @@
 
 .vault-separator {
     border-color: var(--text-muted);
-    margin-bottom: 1em;
+    margin-bottom: 0;
     margin-top: 1em;
 }
 
