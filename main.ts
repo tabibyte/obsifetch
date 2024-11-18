@@ -174,9 +174,13 @@ private async getVaultStats() {
             
         const resolvedLinks = this.app.metadataCache.resolvedLinks;
         const linkedFiles = new Set<string>();
+        let internalLinkCount = 0;
         
         Object.values(resolvedLinks).forEach(links => {
-            Object.keys(links).forEach(path => linkedFiles.add(path));
+            Object.keys(links).forEach(path => {
+                linkedFiles.add(path);
+                internalLinkCount += links[path];
+            });
         });
         
         const orphanedFiles = markdownFiles.filter(file => 
@@ -194,6 +198,7 @@ private async getVaultStats() {
             totalMarkdown: markdownFiles.length,
             totalAttachments: attachments.length,
             orphanedFiles,
+            internalLinkCount,
             attachmentPercentage: `${attachmentPercentage}%`,
             totalPlugins: communityPluginCount + corePluginCount,
             communityPlugins: communityPluginCount,
@@ -277,6 +282,7 @@ private async getVaultStats() {
             `markdown files: ${stats.totalMarkdown} (${stats.markdownSize})`,
             `attachments: ${stats.totalAttachments} (${stats.attachmentSize})`,
             `orphan files: ${stats.orphanedFiles}`,
+            `internal links: ${stats.internalLinkCount}`,
             `core plugins: ${stats.corePlugins}`,
             `community plugins: ${stats.communityPlugins}`,
             `theme: ${stats.theme}`

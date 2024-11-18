@@ -11,11 +11,12 @@
     max-height: 100%;
     width: fit-content;
     align-self: center;
-    padding-right: 0;
+    padding: 0;
 }
 
 .modal-container.mod-dim .modal {
     box-shadow: var(--shadow-l);
+    overflow: hidden;
 }
 
 /* Layout Container Styles
@@ -66,6 +67,8 @@
     font-family: monospace;
     font-size: 14px;
     font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .vault-header {
