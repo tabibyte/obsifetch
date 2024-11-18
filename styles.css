@@ -11,11 +11,12 @@
     max-height: 100%;
     width: fit-content;
     align-self: center;
-    padding-right: 0;
+    padding: 0;
 }
 
 .modal-container.mod-dim .modal {
     box-shadow: var(--shadow-l);
+    overflow: hidden;
 }
 
 /* Layout Container Styles
@@ -66,6 +67,8 @@
     font-family: monospace;
     font-size: 14px;
     font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .vault-header {
@@ -77,19 +80,20 @@
 
 .vault-separator {
     border-color: var(--text-muted);
-    margin-bottom: 1em;
+    margin-bottom: 0;
     margin-top: 1em;
 }
 
 /* Text Content Styles
 -------------------------------------------------- */
-pre {
+.logo-section pre {
     margin: 0;
     white-space: pre;
     color: var(--text-accent);
     font-weight: bold;
     line-height: 1.1;
-    overflow: hidden;
+    height: auto;
+    width: auto;
 }
 
 .info-section pre {

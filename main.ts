@@ -8,6 +8,14 @@ const DEFAULT_SETTINGS: ObsifetchSettings = {
     customLogo: ''
 }
 
+const getUsername = (): string => {
+    try {
+        return require("os").userInfo().username;
+    } catch {
+        return "user";
+    }
+};
+
 class ObsifetchModal extends Modal {
     private logo: string;
     private vaultInfo: string;
@@ -36,9 +44,9 @@ class ObsifetchModal extends Modal {
       const vaultName = this.app.vault.getName();
       
       infoSection.createEl('div', {
-          text: `${require("os").userInfo().username}@${vaultName.toLowerCase()}`,
-          cls: 'vault-header'
-      });
+        text: `${getUsername()}@${vaultName.toLowerCase()}`,
+        cls: 'vault-header'
+        });
   
       infoSection.createEl('hr', {
           cls: 'vault-separator'
@@ -147,39 +155,38 @@ export default class ObsifetchPlugin extends Plugin {
     }
 
 private async getVaultStats() {
-        // Theme detection
+
         const activeTheme = (this.app as any).customCss?.theme || 'default';
         
-        // Plugin detection with core vs community split
         const manifests = (this.app as any).plugins?.manifests || {};
         const communityPluginCount = Object.keys(manifests).length;
-        // Fix for internal plugins access
+
         const corePluginCount = Object.keys((this.app as any).internalPlugins?.plugins || {}).length;
         
-        // Get all files and ensure they're TFiles
         const allFiles = this.app.vault.getAllLoadedFiles()
             .filter((file): file is TFile => file instanceof TFile);
         
-        // Split by type (now guaranteed to be TFiles)
         const markdownFiles = allFiles
             .filter(file => file.extension === 'md');
         
         const attachments = allFiles
             .filter(file => file.extension !== 'md');
             
-        // Calculate orphaned files
         const resolvedLinks = this.app.metadataCache.resolvedLinks;
         const linkedFiles = new Set<string>();
+        let internalLinkCount = 0;
         
         Object.values(resolvedLinks).forEach(links => {
-            Object.keys(links).forEach(path => linkedFiles.add(path));
+            Object.keys(links).forEach(path => {
+                linkedFiles.add(path);
+                internalLinkCount += links[path];
+            });
         });
         
         const orphanedFiles = markdownFiles.filter(file => 
             !linkedFiles.has(file.path)
         ).length;
         
-        // Calculate sizes with proper type assertions
         const totalSize = await this.calculateTotalSize(allFiles);
         const attachmentSize = await this.calculateTotalSize(attachments);
         const markdownSize = await this.calculateTotalSize(markdownFiles);
@@ -191,6 +198,7 @@ private async getVaultStats() {
             totalMarkdown: markdownFiles.length,
             totalAttachments: attachments.length,
             orphanedFiles,
+            internalLinkCount,
             attachmentPercentage: `${attachmentPercentage}%`,
             totalPlugins: communityPluginCount + corePluginCount,
             communityPlugins: communityPluginCount,
@@ -250,7 +258,7 @@ private async getVaultStats() {
             } else {
                 osDetails = 'linux';
             }
-        } else if (userAgent.includes('mac')) {
+        } else if (userAgent.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('darwin')) {
             platform = 'macos';
         } else if (userAgent.includes('win')) {
             platform = 'windows';
@@ -274,6 +282,7 @@ private async getVaultStats() {
             `markdown files: ${stats.totalMarkdown} (${stats.markdownSize})`,
             `attachments: ${stats.totalAttachments} (${stats.attachmentSize})`,
             `orphan files: ${stats.orphanedFiles}`,
+            `internal links: ${stats.internalLinkCount}`,
             `core plugins: ${stats.corePlugins}`,
             `community plugins: ${stats.communityPlugins}`,
             `theme: ${stats.theme}`

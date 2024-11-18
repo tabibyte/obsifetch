@@ -2,8 +2,6 @@
 
 A neofetch-style system information display for Obsidian vaults.
 
-![img1](https://github.com/user-attachments/assets/2acc06d2-6287-431d-bace-442a88d4dbdd)
-
 ### Features
 
 - Display Vault Statistics (files, sizes, attachments, orphan files, plugins, themes etc.)
@@ -17,7 +15,6 @@ A neofetch-style system information display for Obsidian vaults.
 #### From Obsidian Community Plugins
 
 *In the future*
-
 
 #### Manual Installation
 
