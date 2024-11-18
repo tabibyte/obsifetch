@@ -155,27 +155,23 @@ export default class ObsifetchPlugin extends Plugin {
     }
 
 private async getVaultStats() {
-        // Theme detection
+
         const activeTheme = (this.app as any).customCss?.theme || 'default';
         
-        // Plugin detection with core vs community split
         const manifests = (this.app as any).plugins?.manifests || {};
         const communityPluginCount = Object.keys(manifests).length;
-        // Fix for internal plugins access
+
         const corePluginCount = Object.keys((this.app as any).internalPlugins?.plugins || {}).length;
         
-        // Get all files and ensure they're TFiles
         const allFiles = this.app.vault.getAllLoadedFiles()
             .filter((file): file is TFile => file instanceof TFile);
         
-        // Split by type (now guaranteed to be TFiles)
         const markdownFiles = allFiles
             .filter(file => file.extension === 'md');
         
         const attachments = allFiles
             .filter(file => file.extension !== 'md');
             
-        // Calculate orphaned files
         const resolvedLinks = this.app.metadataCache.resolvedLinks;
         const linkedFiles = new Set<string>();
         
@@ -187,7 +183,6 @@ private async getVaultStats() {
             !linkedFiles.has(file.path)
         ).length;
         
-        // Calculate sizes with proper type assertions
         const totalSize = await this.calculateTotalSize(allFiles);
         const attachmentSize = await this.calculateTotalSize(attachments);
         const markdownSize = await this.calculateTotalSize(markdownFiles);
