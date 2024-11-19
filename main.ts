@@ -80,23 +80,10 @@ class ObsifetchModal extends Modal {
         lineDiv.createSpan({text: value, cls: 'stat-value'});
     });
   
-      const colorSquares = preElement.createSpan({cls: 'color-squares'});
-      const currentRow = colorSquares.createSpan({cls: 'color-row'});
-      [
-          
-          '--interactive-accent',
-          '--text-accent',
-          '--text-faint',
-          '--text-normal',
-          '--text-muted',
-          '--text-error',
-          '--text-highlight-bg',
-          '--background-secondary',
-          '--background-primary'
-      ].forEach(color => {
-          const square = currentRow.createSpan();
-          square.style.backgroundColor = `var(${color})`;
-      });
+    const colorSquares = preElement.createSpan({cls: 'color-squares'});
+    for (let i = 0; i < 8; i++) {
+        colorSquares.createSpan();
+    }
   }
     onClose() {
         const {contentEl} = this;
