@@ -18,7 +18,7 @@ A neofetch-style system information display for Obsidian vaults.
 
 #### From Obsidian Community Plugins
 
-*In the future*
+*submitted*
 
 #### Manual Installation
 
@@ -27,7 +27,7 @@ A neofetch-style system information display for Obsidian vaults.
 3. Copy those 3 files to your vault's `.obsidian/plugins/obsifetch/` directory
 4. Reload community plugins list in settings in obsidian app. It should appear there.
 5. Turn on the plugin
-6. You can use it by clicking the terminal icon in the left ribbon, using command palette and searching for "Show Neofetch" or you can define and use a hotkey
+6. You can use it by clicking the terminal icon in the left ribbon, using command palette and searching for "Show" command for obsifetch or you can define and use a hotkey
 
 ### Custom ASCII Art
 
