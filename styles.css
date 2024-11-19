@@ -147,6 +147,8 @@
 }
 
 .color-row span {
+    width: 1.5em;
+    height: 1.5em;
     margin-left: 0;
     padding-left: 0;
     display: block;
