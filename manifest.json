@@ -6,6 +6,5 @@
 	"description": "neofetch but for obsidian",
 	"author": "tabibyte",
 	"authorUrl": "tabibyte.github.io",
-	"isDesktopOnly": false,
-	"styles": ["styles.css"]
+	"isDesktopOnly": true
 }
