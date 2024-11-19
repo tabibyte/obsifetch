@@ -6,6 +6,5 @@
 	"description": "A neofetch-style vault information display",
 	"author": "tabibyte",
 	"authorUrl": "tabibyte.github.io",
-	"isDesktopOnly": false,
-	"styles": ["styles.css"]
+	"isDesktopOnly": true
 }

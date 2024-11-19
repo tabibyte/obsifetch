@@ -1,4 +1,4 @@
-import { Plugin, Modal, TFile, App, PluginSettingTab, Setting } from 'obsidian';
+import { Plugin, Modal, TFile, App, PluginSettingTab, Setting, Platform } from 'obsidian';
 
 interface ObsifetchSettings {
     customLogo: string;
@@ -104,8 +104,8 @@ class ObsifetchSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         new Setting(containerEl)
-            .setName('Custom ASCII Logo')
-            .setDesc('Paste your custom ASCII art here')
+            .setName('Custom ASCII Art')
+            .setDesc('Display your own ASCII art. Delete the content to reset to default.')
             .addTextArea(text => text
                 .setPlaceholder('Paste ASCII art here...')
                 .setValue(this.plugin.settings.customLogo)
@@ -137,7 +137,7 @@ export default class ObsifetchPlugin extends Plugin {
         this.addSettingTab(new ObsifetchSettingTab(this.app, this));
         console.log('loading obsifetch');
         this.addCommand({
-            id: 'show-obsifetch',
+            id: 'show',
             name: 'Show',
             callback: () => this.displayObsifetch()
         });
@@ -237,33 +237,19 @@ private async getVaultStats() {
 
     private getSystemInfo(): string {
         const isDarkTheme = document.body.classList.contains('theme-dark');
-        let platform = 'unknown';
-        let osDetails = '';
-        
-        const userAgent = navigator.userAgent.toLowerCase();
-        
-        if (userAgent.includes('linux')) {
-            platform = 'linux';
-            if (userAgent.includes('ubuntu')) {
-                osDetails = 'ubuntu';
-            } else if (userAgent.includes('fedora')) {
-                osDetails = 'fedora';
-            } else if (userAgent.includes('arch')) {
-                osDetails = 'arch';
-            } else if (userAgent.includes('debian')) {
-                osDetails = 'debian';
-            } else {
-                osDetails = 'linux';
-            }
-        } else if (userAgent.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('darwin')) {
-            platform = 'macos';
-        } else if (userAgent.includes('win')) {
-            platform = 'windows';
+        let os = 'unknown';
+
+        if (Platform.isLinux) {
+            os = 'linux';
+        } else if (Platform.isMacOS) {
+            os = 'macos';
+        } else if (Platform.isWin) {
+            os = 'windows';
         }
 
         return [
             `appearance: ${isDarkTheme ? 'dark' : 'light'}`,
-            `os: ${osDetails || platform}`
+            `os: ${os}`
         ].join('\n').trimEnd();
     }
 
@@ -303,6 +289,5 @@ private async getVaultStats() {
 
     onunload() {
         console.log('unloading obsifetch');
-        this.ribbonIcon.remove();
     }
 }
