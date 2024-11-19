@@ -130,29 +130,46 @@
 /* Color Squares Display
 -------------------------------------------------- */
 .color-squares {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(9, 1.5em);
     gap: 0;
     margin-top: 1em;
     align-self: flex-start;
-    margin-left: 0;
-    padding-left: 0;
+    height: 1.5em;
 }
 
-.color-row {
-    display: flex;
-    flex-direction: row;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-.color-row span {
+/* Create base squares using pseudo-elements */
+.color-squares::before,
+.color-squares::after,
+.color-squares > span {
+    content: '';
+    display: block;
     width: 1.5em;
     height: 1.5em;
-    margin-left: 0;
-    padding-left: 0;
-    display: block;
 }
+
+/* First square - interactive accent */
+.color-squares::before {
+    background: var(--interactive-accent);
+    grid-column: 1;
+}
+
+/* Create empty span elements in HTML */
+.color-squares span {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+/* Color each square */
+.color-squares span:nth-child(1) { background: var(--text-accent); }
+.color-squares span:nth-child(2) { background: var(--text-faint); }
+.color-squares span:nth-child(3) { background: var(--text-normal); }
+.color-squares span:nth-child(4) { background: var(--text-muted); }
+.color-squares span:nth-child(5) { background: var(--text-error); }
+.color-squares span:nth-child(6) { background: var(--text-highlight-bg); }
+.color-squares span:nth-child(7) { background: var(--background-secondary); }
+.color-squares span:nth-child(8) { background: var(--background-primary); }
 
 /* System Info Section
 -------------------------------------------------- */
