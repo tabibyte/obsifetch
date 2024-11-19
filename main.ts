@@ -4,6 +4,20 @@ interface ObsifetchSettings {
     customLogo: string;
 }
 
+interface CustomCSS {
+    theme?: string;
+}
+
+interface ObsidianApp extends App {
+    customCss: CustomCSS;
+    plugins: {
+        manifests: Record<string, any>;
+    };
+    internalPlugins: {
+        plugins: Record<string, any>;
+    };
+}
+
 const DEFAULT_SETTINGS: ObsifetchSettings = {
     customLogo: ''
 }
@@ -82,10 +96,6 @@ class ObsifetchModal extends Modal {
       ].forEach(color => {
           const square = currentRow.createSpan();
           square.style.backgroundColor = `var(${color})`;
-          square.style.width = '1.5em';
-          square.style.height = '1.5em';
-          square.style.display = 'inline-block';
-          square.style.marginLeft = '0';
       });
   }
     onClose() {
@@ -141,7 +151,7 @@ export default class ObsifetchPlugin extends Plugin {
         console.log('loading obsifetch');
         this.addCommand({
             id: 'show-obsifetch',
-            name: 'Show Obsifetch',
+            name: 'Show',
             callback: () => this.displayObsifetch()
         });
     
@@ -156,12 +166,12 @@ export default class ObsifetchPlugin extends Plugin {
 
 private async getVaultStats() {
 
-        const activeTheme = (this.app as any).customCss?.theme || 'default';
+        const activeTheme = (this.app as ObsidianApp).customCss?.theme || 'default';
         
-        const manifests = (this.app as any).plugins?.manifests || {};
+        const manifests = (this.app as ObsidianApp).plugins?.manifests || {};
         const communityPluginCount = Object.keys(manifests).length;
 
-        const corePluginCount = Object.keys((this.app as any).internalPlugins?.plugins || {}).length;
+        const corePluginCount = Object.keys((this.app as ObsidianApp).internalPlugins?.plugins || {}).length;
         
         const allFiles = this.app.vault.getAllLoadedFiles()
             .filter((file): file is TFile => file instanceof TFile);
