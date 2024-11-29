@@ -2,9 +2,10 @@
 
 A neofetch-style system information display for Obsidian vaults.
 
-![image](https://github.com/user-attachments/assets/16886c57-5751-4553-9f26-37bff7e93294)
+![image](https://github.com/user-attachments/assets/c3cd2c6e-8d7a-4e03-b529-cb471ef8d2b6)
 
-![image](https://github.com/user-attachments/assets/d50e1741-e7fb-494e-b338-f4337495adea)
+![image](https://github.com/user-attachments/assets/a7902d47-1b4c-4881-9b1b-43c6aec842fb)
+
 
 ### Features
 
@@ -18,7 +19,7 @@ A neofetch-style system information display for Obsidian vaults.
 
 #### From Obsidian Community Plugins
 
-*submitted*
+Just search for "Obsifetch"
 
 #### Manual Installation
 
