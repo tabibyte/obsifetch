@@ -104,7 +104,7 @@ class ObsifetchSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         new Setting(containerEl)
-            .setName('Custom ASCII Art')
+            .setName('Custom art')
             .setDesc('Display your own ASCII art. Delete the content to reset to default.')
             .addTextArea(text => text
                 .setPlaceholder('Paste ASCII art here...')
