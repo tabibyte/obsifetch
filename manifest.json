@@ -3,8 +3,8 @@
 	"name": "Obsifetch",
 	"version": "1.3.2",
 	"minAppVersion": "0.15.0",
-	"description": "A neofetch-style vault information display",
+	"description": "A neofetch-style vault information display.",
 	"author": "tabibyte",
-	"authorUrl": "tabibyte.github.io",
+	"authorUrl": "https://github.com/tabibyte",
 	"isDesktopOnly": false
 }
